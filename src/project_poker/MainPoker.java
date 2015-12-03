@@ -50,5 +50,8 @@ public class MainPoker {
 		poker.bet(cash);
 		poker.displayPot();
 		}
+		
+		poker.checkHand();
+		poker.determinePayout();
 	}
 }
