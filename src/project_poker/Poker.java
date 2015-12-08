@@ -5,8 +5,11 @@ public class Poker {
 	private int round;
 	private int matchCard;
 	private int matchSuit;
-	private int[][] hand = {{0,0},{1,0},{2,0},{3,0},{0,4}};
+	private int[][] hand = new int[5][2];
 	private double payout;
+	private String suit[] = {"", "Spades", "Clubs", "Diamonds", "Hearts"};
+	private String value[] = {"", "Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"};
+
 	
 	public Poker() {
 		pot = 10;
@@ -17,7 +20,11 @@ public class Poker {
 	}
 	
 	public void randomCard() {
-		
+		for (int i = 0; i <= 4; i++) {
+			hand[i][0] = (int)(Math.random() * 4 + 1);
+			hand[i][1] = (int)(Math.random() * 13 + 1);
+			
+		}
 	}
 	
 	/**
@@ -26,16 +33,20 @@ public class Poker {
      * This takes the ordinal value of the card number in the array and does another randomCard().
      */
     public void replace(int cardNumber) {
+    	hand[cardNumber][0] = (int)(Math.random() * 4 + 1);
+    	hand[cardNumber][1] = (int)(Math.random() * 13 + 1);
     }
     
     /**
      * This method will use a for loop that displays the user's hand..
      */
     public void displayHand() {
-        
-        System.out.println("Your hand is: " + hand);
+        System.out.println("Your hand is: ");
+    	for (int i = 0; i <= 4; i++) {
+        	System.out.print(value[hand[i][1]] + " of " + suit[hand[i][0]] + ", ");
+        }
+    	System.out.println("");
     }
-	
 	public void checkHand() {
 		for(int i = 1; i < 5; i++) {
 			if(hand[0][0] == hand[i][0]) {
@@ -54,9 +65,9 @@ public class Poker {
 	}
 	
 	public void determinePayout() {
-		if(matchSuit == 4) {
+		if(matchSuit == 4) { //flush
 			payout = 0.05;
-		} else if(matchCard == 1) {
+		} else if(matchCard == 1) { // one pair
 			payout = 0.01;
 		} else if(matchCard == 2) { // three of a kind
             payout = 0.03;
@@ -64,20 +75,16 @@ public class Poker {
             payout = 0.25;
         } else if(matchCard == 0) { // no pair
             payout = 0;
-        }
-		System.out.println("Match card: " + matchCard);
-		System.out.println("Match suit: " + matchSuit);
-
+        }		
 		
-		System.out.println("Payout is $" + pot*payout);
 	}
 	
 	public void bet(double amount) {
 		pot += amount;
 	}
 	
-	public void displayPot(){
-		System.out.println(pot);
+	public double displayPot(){
+		return pot;
 	}
 	
 	public int round() {

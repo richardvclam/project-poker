@@ -9,6 +9,18 @@ public class MainPoker {
 		Scanner in = new Scanner(System.in);
 		double cash, totalCash;
 		boolean run = true;
+		double deposit = 0;
+		System.out.print("Enter the amount of money that you want to deposit: ");
+		if (in.hasNextDouble()) {
+			deposit = in.nextDouble();
+		}
+		else {
+			while (deposit <= 0) {
+				System.out.println("Error: invalid deposit, try again");
+				System.out.print("Enter the amount of money that you want to deposit: ");
+				deposit = in.nextDouble();
+			}
+		}
 		while (run == true) {
 			do {
 				System.out.print("Enter an amount to bet: $");
