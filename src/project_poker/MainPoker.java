@@ -67,6 +67,7 @@ public class MainPoker {
 					playAgain = in.next();
 					if (playAgain.equals("Y") || playAgain.equals("y")) {
 						run = true;
+						poker.resetRound();
 					}
 					else if (playAgain.equals("N") || playAgain.equals("n")) {
 						run = false;

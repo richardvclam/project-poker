@@ -31,8 +31,15 @@ public class Poker {
 		for (int i = 0; i <= 4; i++) {
 			hand[i][0] = (int)(Math.random() * 4 + 1);
 			hand[i][1] = (int)(Math.random() * 13 + 1);
-			
 		}
+	}
+	
+	public void resetRound() {
+		matchCard = 0;
+		matchSuit = 0;
+		straight = 0;
+		royalFlush = 0;
+		round++;
 	}
 	
 	/**
@@ -97,11 +104,6 @@ public class Poker {
 	}
 	
 	public void determinePayout() {
-
-		if(matchSuit == 4) { //flush
-			payout = 0.05;
-		} else if(matchCard == 1) { // one pair
-
 		if(twoPair && matchCard == 2) { // full house
 			payoutText = "a Full House";
 			payout = 0.06;
@@ -137,7 +139,6 @@ public class Poker {
 
 		System.out.println("You got " + payoutText);
 		System.out.println("Payout is $" + pot*payout);
-		}
 	}
 	
 	public void bet(double amount) {
