@@ -20,6 +20,22 @@ public class Poker {
 		
 	}
 	
+	/**
+     * This will replace the player's card depending on which card number they want to replace
+     * @parameter cardNumber is the place from 1-5 (left to right) of the user's cards
+     * This takes the ordinal value of the card number in the array and does another randomCard().
+     */
+    public void replace(int cardNumber) {
+    }
+    
+    /**
+     * This method will use a for loop that displays the user's hand..
+     */
+    public void displayHand() {
+        
+        System.out.println("Your hand is: " + hand);
+    }
+	
 	public void checkHand() {
 		for(int i = 1; i < 5; i++) {
 			if(hand[0][0] == hand[i][0]) {
@@ -42,9 +58,13 @@ public class Poker {
 			payout = 0.05;
 		} else if(matchCard == 1) {
 			payout = 0.01;
-		} else {
-			payout = 0;
-		}
+		} else if(matchCard == 2) { // three of a kind
+            payout = 0.03;
+        } else if(matchCard == 3) { // four of a kind 
+            payout = 0.25;
+        } else if(matchCard == 0) { // no pair
+            payout = 0;
+        }
 		System.out.println("Match card: " + matchCard);
 		System.out.println("Match suit: " + matchSuit);
 
