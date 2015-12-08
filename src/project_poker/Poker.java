@@ -1,15 +1,16 @@
 package project_poker;
 
 public class Poker {
-	private double pot;
-	private int round;
-	private int matchCard;
-	private int matchSuit;
-	private int[][] hand = {{0,0},{1,0},{2,0},{3,0},{0,4}};
-	private double payout;
+	private String payoutText;
+	private boolean twoPair = false;
+	private double pot, payout;
+	private int round, matchCard, matchSuit, straight, royalFlush;
+	private int[][] hand = {{1,10},{1,11},{1,12},{1,13},{1,1}};
+	private int[] rFlush = {10, 11, 12, 13, 1};
+	
 	
 	public Poker() {
-		pot = 10;
+		pot = 0;
 		round = 1;
 		matchCard = 0;
 		matchSuit = 0;
@@ -37,38 +38,81 @@ public class Poker {
     }
 	
 	public void checkHand() {
+		// Checking for suits
 		for(int i = 1; i < 5; i++) {
 			if(hand[0][0] == hand[i][0]) {
 				matchSuit++;
 			}
 		}
 		
+		// Checking for pairs
+		int tempCard = -1;
 		for(int i = 0; i <= 3; i++) {
 			for(int j = 1; (i + j) <= 4; j++) {
 				if(hand[i][1] == hand[i+j][1]) {
-					matchCard++;
+					if(matchCard != 0 && hand[i][1] != tempCard) {
+						twoPair = true;
+					} else {
+						matchCard++;
+						tempCard = hand[i][1];
+					}
 					break;
 				}
+			}
+		}
+		
+		// Checking for straight
+		for(int i = 1; i < 5; i ++) {
+			if((hand[i-1][1] + 1) == hand[i][1]) {
+				straight++;
+			} else if(hand[3][1] == 13 && hand[4][1] == 1) {
+				straight++;
+			}
+		}
+		
+		// Checking for royal flush
+		for(int i = 0; i < 5; i ++) {
+			if(hand[i][1] == rFlush[i]) {
+				royalFlush++;
 			}
 		}
 	}
 	
 	public void determinePayout() {
-		if(matchSuit == 4) {
+		if(twoPair && matchCard == 2) { // full house
+			payoutText = "a Full House";
+			payout = 0.06;
+		} else if(twoPair) {        // two pair
+			payoutText = "Two Pairs";
+			payout = 0.02;
+		} else if(royalFlush == 5 && matchSuit == 4) {
+			payoutText = "a Royal Flush";
+			payout = 2.5;
+		} else if(straight == 4 && matchSuit == 4) {
+			payoutText = "a Straight Flush";
+			payout = 0.5;
+		} else if(straight == 4) {  // straight
+			payoutText = "a Straight";
+			payout = 0.04;
+		} else if(matchSuit == 4) { // flush
+			payoutText = "a Flush";
 			payout = 0.05;
-		} else if(matchCard == 1) {
+		} else if(matchCard == 1) { // one pair
+			payoutText = "One Pair";
 			payout = 0.01;
 		} else if(matchCard == 2) { // three of a kind
+			payoutText = "Three of a Kind";
             payout = 0.03;
         } else if(matchCard == 3) { // four of a kind 
+        	payoutText = "Four of a Kind";
             payout = 0.25;
         } else if(matchCard == 0) { // no pair
+        	payoutText = "no pairs";
             payout = 0;
         }
-		System.out.println("Match card: " + matchCard);
-		System.out.println("Match suit: " + matchSuit);
+		System.out.println("Straights: " + royalFlush);
 
-		
+		System.out.println("You got " + payoutText);
 		System.out.println("Payout is $" + pot*payout);
 	}
 	
