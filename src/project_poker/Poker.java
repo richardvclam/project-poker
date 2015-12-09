@@ -43,6 +43,7 @@ public class Poker {
     public void replace(int cardNumber) {
     	hand[cardNumber][0] = (int)(Math.random() * 4 + 1);
     	hand[cardNumber][1] = (int)(Math.random() * 13 + 1);
+    	displayHand();
     }
     
     /**
@@ -98,9 +99,6 @@ public class Poker {
 	
 	public void determinePayout() {
 
-		if(matchSuit == 4) { //flush
-			payout = 0.05;
-		} else if(matchCard == 1) { // one pair
 
 		if(twoPair && matchCard == 2) { // full house
 			payoutText = "a Full House";
@@ -135,17 +133,19 @@ public class Poker {
         }
 		System.out.println("Straights: " + royalFlush);
 
-		System.out.println("You got " + payoutText);
-		System.out.println("Payout is $" + pot*payout);
-		}
+		
 	}
-	
+		
 	public void bet(double amount) {
 		pot += amount;
 	}
 	
 	public double displayPot(){
 		return pot;
+	}
+	
+	public double getPayout() {
+		return payout;
 	}
 	
 	public int round() {
