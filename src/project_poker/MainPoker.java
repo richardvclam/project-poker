@@ -7,7 +7,7 @@ public class MainPoker {
 	public static void main(String[] args) {
 		Poker poker = new Poker();
 		Scanner in = new Scanner(System.in);
-		double cash, totalCash;
+		double cash;
 		boolean run = true;
 		double deposit = 0;
 		System.out.print("Enter the amount of money that you want to deposit: ");
@@ -32,6 +32,7 @@ public class MainPoker {
 					} while(!in.hasNextDouble());
 				}
 				cash = in.nextDouble();
+				deposit -= cash;
 				if(cash < 1) {
 					do {
 						System.out.println("Error: Please input a number more than or equal to $1.00.");
@@ -61,23 +62,27 @@ public class MainPoker {
                 }
                 poker.checkHand();
                 poker.determinePayout();
-        		System.out.printf("The payout: %.2f" , (cash + (cash * poker.getPayout())));
-				String playAgain;
-				System.out.print("Do you want to play again? (Y or N) ");
+                System.out.println("You got: " + poker.getHandText());
+                cash = (cash + (cash * poker.getPayout()));
+        		System.out.printf("The payout: %.2f" , cash);
+				String playAgain;				
+				System.out.print("\nDo you want to play again? (Y or N) ");
+				deposit += cash;
 				if (in.hasNext()) {
 					playAgain = in.next();
 					if (playAgain.equals("Y") || playAgain.equals("y")) {
 						run = true;
+						poker.resetRound();
 					}
 					else if (playAgain.equals("N") || playAgain.equals("n")) {
 						run = false;
-						System.out.println("Your total winnings: " + deposit);
+						System.out.printf("Your total winnings: %.2f" , deposit);
 					}
 					else { // the program ends if the input is invalid.
 						run = false;
 						System.out.println("Error: The input is invalid.");
 						System.out.println("The game will now end.");
-						System.out.println("Your total winnings: " + deposit);
+						System.out.printf("Your total winnings: %.2f" , deposit);
 					}
 				}   
 			} while(cash < 1);

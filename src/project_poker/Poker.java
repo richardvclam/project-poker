@@ -35,6 +35,15 @@ public class Poker {
 		}
 	}
 	
+	public void resetRound() {
+		pot = 0;
+		straight = 0;
+		royalFlush = 0;
+		payout = 0;
+		round++;
+		matchCard = 0;
+		matchSuit = 0;
+	}
 	/**
      * This will replace the player's card depending on which card number they want to replace
      * @parameter cardNumber is the place from 1-5 (left to right) of the user's cards
@@ -146,6 +155,10 @@ public class Poker {
 	
 	public double getPayout() {
 		return payout;
+	}
+	
+	public String getHandText(){
+		return payoutText;
 	}
 	
 	public int round() {
