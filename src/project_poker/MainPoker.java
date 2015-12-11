@@ -7,9 +7,8 @@ public class MainPoker {
 	public static void main(String[] args) {
 		Poker poker = new Poker();
 		Scanner in = new Scanner(System.in);
-		double cash;
+		double cash, deposit = 0;
 		boolean run = true;
-		double deposit = 0;
 		System.out.print("Enter the amount of money that you want to deposit: $");
 		if (in.hasNextDouble()) {
 			deposit = in.nextDouble();
@@ -20,6 +19,7 @@ public class MainPoker {
 				System.out.print("Enter the amount of money that you want to deposit: $");
 				deposit = in.nextDouble();
 			}
+			poker.deposit(deposit);
 		}
 		while (run == true) {
 			do {
@@ -32,17 +32,14 @@ public class MainPoker {
 					} while(!in.hasNextDouble());
 				}
 				cash = in.nextDouble();
-				deposit -= cash;
-				if(cash < 1) {
+				if(cash < 1 || cash > deposit) {
 					do {
-						System.out.println("Error: Please input a number more than or equal to $1.00.");
+						System.out.println("Error: Please bet more than or equal to $1.00.");
 						System.out.print("Enter an amount to bet: $");
 						in.nextDouble();
-					} while(cash < 1);
+					} while(cash < 1 || cash > deposit);
 				}
 				poker.bet(cash);
-				System.out.println("The pot is: " + poker.displayPot());
-				// poker.randomCard();
 				poker.shuffleDeck();
 				poker.getHand();
                 poker.displayHand();
@@ -66,13 +63,13 @@ public class MainPoker {
                 
                 poker.checkHand();
                 poker.determinePayout();
-                System.out.println("You got: " + poker.getHandText());
-                cash = (cash + (cash * poker.getPayout()));
-        		System.out.printf("The payout: %.2f" , cash);
+                // System.out.println("You got: " + poker.getHandText());
+                
+                // cash = (cash + (cash * poker.getPayout()));
+        		// System.out.printf("The payout: %.2f" , cash);
         		
 				String playAgain;				
 				System.out.print("\nDo you want to play again? (Y or N) ");
-				deposit += cash;
 				if (in.hasNext()) {
 					playAgain = in.next();
 					if (playAgain.equals("Y") || playAgain.equals("y")) {
@@ -81,13 +78,13 @@ public class MainPoker {
 					}
 					else if (playAgain.equals("N") || playAgain.equals("n")) {
 						run = false;
-						System.out.printf("Your total winnings: %.2f" , deposit);
+						System.out.printf("Your total winnings: %.2f" , poker.displayDeposit());
 					}
 					else { // the program ends if the input is invalid.
 						run = false;
 						System.out.println("Error: The input is invalid.");
 						System.out.println("The game will now end.");
-						System.out.printf("Your total winnings: %.2f" , deposit);
+						System.out.printf("Your total winnings: %.2f" , poker.displayDeposit());
 					}
 				}   
 			} while(cash < 1);

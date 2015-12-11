@@ -2,12 +2,12 @@ package project_poker;
 
 public class Poker {
 
-	private double pot, payout;
+	private double pot, payout, deposit;
 	private int round, matchCard, matchSuit, straight, royalFlush, cardsDrawn;
 	private int[][] hand = new int[5][2];
 	private int[][] deck = new int[52][2];
 	private int[][] shuffledDeck = new int[52][2];
-	private int[] rFlush = {10, 11, 12, 13, 1};
+	private int[] rFlush = {1, 10, 11, 12, 13};
 	private String suit[] = {"", "Spades", "Clubs", "Diamonds", "Hearts"};
 	private String value[] = {"", "Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"};
 	private String payoutText;
@@ -20,6 +20,7 @@ public class Poker {
 		matchSuit = 0;
 		payout = 0;
 		cardsDrawn = 0;
+		deposit = 0;
 		
 		// Creating the deck
 		int count = 0;
@@ -91,8 +92,6 @@ public class Poker {
     	System.out.println("");
     }
     
-    
-    
     public void sortHand() {
     	for(int i = 0; i < hand.length; i++) {
     		for(int j = i + 1; j < hand.length; j++) {
@@ -112,7 +111,7 @@ public class Poker {
     }
     
 	public void checkHand() {
-		// Checking for suits
+		// Checking for flush
 		for(int i = 1; i < 5; i++) {
 			if(hand[0][0] == hand[i][0]) {
 				matchSuit++;
@@ -139,7 +138,7 @@ public class Poker {
 		for(int i = 1; i < 5; i ++) {
 			if((hand[i-1][1] + 1) == hand[i][1]) {
 				straight++;
-			} else if(hand[3][1] == 13 && hand[4][1] == 1) {
+			} else if(hand[0][1] == 1 && hand[4][1] == 13) {
 				straight++;
 			}
 		}
@@ -184,15 +183,28 @@ public class Poker {
         	payoutText = "no pairs";
             payout = 0;
         }
-		System.out.println("Payout is $" + pot*payout);
+		
+		System.out.println("You got " + payoutText);
+		
+		if(payout == 0) {
+			System.out.println("You lost $" + pot + ".");
+		} else {
+			System.out.println("You win $" + (pot+(pot*payout)) + "!");
+			deposit += (pot+(pot*payout));
+		}
 	}
 		
 	public void bet(double amount) {
-		pot += amount;
+		pot = amount;
+		deposit -= amount;
 	}
 	
-	public double displayPot(){
-		return pot;
+	public void deposit(double amount) {
+		deposit += amount;
+	}
+	
+	public double displayDeposit(){
+		return deposit;
 	}
 	
 	public double getPayout() {
