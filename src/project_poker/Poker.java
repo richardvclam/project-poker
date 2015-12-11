@@ -31,11 +31,11 @@ public class Poker {
 		for (int i = 0; i <= 4; i++) {
 			hand[i][0] = (int)(Math.random() * 4 + 1);
 			hand[i][1] = (int)(Math.random() * 13 + 1);
-			
 		}
 	}
 	
 	public void resetRound() {
+<<<<<<< HEAD
 		pot = 0;
 		straight = 0;
 		royalFlush = 0;
@@ -44,6 +44,15 @@ public class Poker {
 		matchCard = 0;
 		matchSuit = 0;
 	}
+=======
+		matchCard = 0;
+		matchSuit = 0;
+		straight = 0;
+		royalFlush = 0;
+		round++;
+	}
+	
+>>>>>>> origin/master
 	/**
      * This will replace the player's card depending on which card number they want to replace
      * @parameter cardNumber is the place from 1-5 (left to right) of the user's cards
@@ -107,8 +116,11 @@ public class Poker {
 	}
 	
 	public void determinePayout() {
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/master
 		if(twoPair && matchCard == 2) { // full house
 			payoutText = "a Full House";
 			payout = 0.06;
@@ -142,7 +154,12 @@ public class Poker {
         }
 		System.out.println("Straights: " + royalFlush);
 
+<<<<<<< HEAD
 		
+=======
+		System.out.println("You got " + payoutText);
+		System.out.println("Payout is $" + pot*payout);
+>>>>>>> origin/master
 	}
 		
 	public void bet(double amount) {
