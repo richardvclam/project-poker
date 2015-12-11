@@ -10,14 +10,14 @@ public class MainPoker {
 		double cash;
 		boolean run = true;
 		double deposit = 0;
-		System.out.print("Enter the amount of money that you want to deposit: ");
+		System.out.print("Enter the amount of money that you want to deposit: $");
 		if (in.hasNextDouble()) {
 			deposit = in.nextDouble();
 		}
 		else {
 			while (deposit <= 0) {
 				System.out.println("Error: invalid deposit, try again");
-				System.out.print("Enter the amount of money that you want to deposit: ");
+				System.out.print("Enter the amount of money that you want to deposit: $");
 				deposit = in.nextDouble();
 			}
 		}
@@ -44,7 +44,8 @@ public class MainPoker {
 				System.out.println("The pot is: " + poker.displayPot());
 				poker.randomCard();
                 poker.displayHand();
-                System.out.print("Which cards do you want to replace(1-5 for cards respectively, 0 to quit): ");
+                System.out.print("Which cards do you want to replace (1-5 for cards respectively, 0 to quit): ");
+                
                 while (in.hasNextInt()) {
                     int replaceCard = in.nextInt();
                     if (replaceCard == 0) 
@@ -54,17 +55,19 @@ public class MainPoker {
                     else {
                         while (replaceCard < 0 || replaceCard > 5) {
                             System.out.println("Error: Invalid input please try again.");
-                            System.out.print("Which cards do you want to replace(1-5 for cards respec;tively, 0 to quit): ");
+                            System.out.print("Which cards do you want to replace (1-5 for cards respectively, 0 to quit): ");
                             replaceCard = in.nextInt();
                         }
                     }
-                    System.out.print("Which cards do you want to replace(1-5 for cards respectively, 0 to quit): ");
+                    System.out.print("Which cards do you want to replace (1-5 for cards respectively, 0 to quit): ");
                 }
+                
                 poker.checkHand();
                 poker.determinePayout();
                 System.out.println("You got: " + poker.getHandText());
                 cash = (cash + (cash * poker.getPayout()));
         		System.out.printf("The payout: %.2f" , cash);
+        		
 				String playAgain;				
 				System.out.print("\nDo you want to play again? (Y or N) ");
 				deposit += cash;

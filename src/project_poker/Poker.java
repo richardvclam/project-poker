@@ -2,22 +2,14 @@ package project_poker;
 
 public class Poker {
 
-	private double pot;
-	private int round;
-	private int matchCard;
-	private int matchSuit;
+	private double pot, payout;
+	private int round, matchCard, matchSuit, straight, royalFlush;
 	private int[][] hand = new int[5][2];
-	private double payout;
+	private int[] rFlush = {10, 11, 12, 13, 1};
 	private String suit[] = {"", "Spades", "Clubs", "Diamonds", "Hearts"};
 	private String value[] = {"", "Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"};
-
 	private String payoutText;
 	private boolean twoPair = false;
-	
-	private int straight, royalFlush;
-	
-	private int[] rFlush = {10, 11, 12, 13, 1};
-	
 	
 	public Poker() {
 		pot = 0;
@@ -35,7 +27,6 @@ public class Poker {
 	}
 	
 	public void resetRound() {
-<<<<<<< HEAD
 		pot = 0;
 		straight = 0;
 		royalFlush = 0;
@@ -44,15 +35,7 @@ public class Poker {
 		matchCard = 0;
 		matchSuit = 0;
 	}
-=======
-		matchCard = 0;
-		matchSuit = 0;
-		straight = 0;
-		royalFlush = 0;
-		round++;
-	}
-	
->>>>>>> origin/master
+
 	/**
      * This will replace the player's card depending on which card number they want to replace
      * @parameter cardNumber is the place from 1-5 (left to right) of the user's cards
@@ -68,12 +51,35 @@ public class Poker {
      * This method will use a for loop that displays the user's hand..
      */
     public void displayHand() {
+    	sortHand();
         System.out.println("Your hand is: ");
     	for (int i = 0; i <= 4; i++) {
-        	System.out.print(value[hand[i][1]] + " of " + suit[hand[i][0]] + ", ");
+    		if(i != 0) {
+    			System.out.print(", ");
+    		}
+        	System.out.print(value[hand[i][1]] + " of " + suit[hand[i][0]]);
         }
     	System.out.println("");
     }
+    
+    public void sortHand() {
+    	for(int i = 0; i < hand.length; i++) {
+    		for(int j = i + 1; j < hand.length; j++) {
+	    		int[] tempCard = new int[2];
+	    		if(hand[i][1] > hand[j][1]) {
+	    			tempCard[0] = hand[i][0];
+	    			tempCard[1] = hand[i][1];
+	    			
+	    			hand[i][0] = hand[j][0];
+	    			hand[i][1] = hand[j][1];
+	    			
+	    			hand[j][0] = tempCard[0];
+	    			hand[j][1] = tempCard[1];
+	    		}
+    		}
+    	}
+    }
+    
 	public void checkHand() {
 		// Checking for suits
 		for(int i = 1; i < 5; i++) {
@@ -116,11 +122,6 @@ public class Poker {
 	}
 	
 	public void determinePayout() {
-<<<<<<< HEAD
-
-
-=======
->>>>>>> origin/master
 		if(twoPair && matchCard == 2) { // full house
 			payoutText = "a Full House";
 			payout = 0.06;
@@ -152,14 +153,7 @@ public class Poker {
         	payoutText = "no pairs";
             payout = 0;
         }
-		System.out.println("Straights: " + royalFlush);
-
-<<<<<<< HEAD
-		
-=======
-		System.out.println("You got " + payoutText);
 		System.out.println("Payout is $" + pot*payout);
->>>>>>> origin/master
 	}
 		
 	public void bet(double amount) {
