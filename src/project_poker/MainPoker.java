@@ -42,7 +42,9 @@ public class MainPoker {
 				}
 				poker.bet(cash);
 				System.out.println("The pot is: " + poker.displayPot());
-				poker.randomCard();
+				// poker.randomCard();
+				poker.shuffleDeck();
+				poker.getHand();
                 poker.displayHand();
                 System.out.print("Which cards do you want to replace (1-5 for cards respectively, 0 to quit): ");
                 

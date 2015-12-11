@@ -3,7 +3,7 @@ package project_poker;
 public class Poker {
 
 	private double pot, payout;
-	private int round, matchCard, matchSuit, straight, royalFlush;
+	private int round, matchCard, matchSuit, straight, royalFlush, cardsDrawn;
 	private int[][] hand = new int[5][2];
 	private int[][] deck = new int[52][2];
 	private int[][] shuffledDeck = new int[52][2];
@@ -19,35 +19,29 @@ public class Poker {
 		matchCard = 0;
 		matchSuit = 0;
 		payout = 0;
+		cardsDrawn = 0;
 		
 		// Creating the deck
+		int count = 0;
 		for(int i = 1; i <= 4; i++) {
 			for(int j = 1; j <= 13; j++) {
-				deck[(i*j)-1][0] = i;
-				deck[(i*j)-1][1] = j;
+				deck[count][0] = i;
+				deck[count][1] = j;
+				count++;
 			}
 		}
 	}
 	
 	public void shuffleDeck() {
-		int currentSize = 52;
+		int currentSize = deck.length;
 
-		for(int i = 0; i < 52; i++) {
+		for(int i = 0; i < deck.length; i++) {
 			int pos = (int) (Math.random()*currentSize);
 			shuffledDeck[i][0] = deck[pos][0];
 			shuffledDeck[i][1] = deck[pos][1];
 			deck[pos][0] = deck[currentSize - 1][0];
 			deck[pos][1] = deck[currentSize - 1][1];
 			currentSize--;
-			System.out.println(deck[i][0] + " " + deck[i][1]);
-			System.out.println(shuffledDeck[i][1]);
-		}
-	}
-	
-	public void randomCard() {
-		for (int i = 0; i <= 4; i++) {
-			hand[i][0] = (int)(Math.random() * 4 + 1);
-			hand[i][1] = (int)(Math.random() * 13 + 1);
 		}
 	}
 	
@@ -59,6 +53,7 @@ public class Poker {
 		round++;
 		matchCard = 0;
 		matchSuit = 0;
+		cardsDrawn = 0;
 	}
 
 	/**
@@ -67,9 +62,18 @@ public class Poker {
      * This takes the ordinal value of the card number in the array and does another randomCard().
      */
     public void replace(int cardNumber) {
-    	hand[cardNumber][0] = (int)(Math.random() * 4 + 1);
-    	hand[cardNumber][1] = (int)(Math.random() * 13 + 1);
+    	hand[cardNumber][0] = shuffledDeck[cardsDrawn][0];
+    	hand[cardNumber][1] = shuffledDeck[cardsDrawn][1];
+    	cardsDrawn++;
     	displayHand();
+    }
+    
+    public void getHand() {
+    	for (int i = 0; i < 5; i++) {
+    		hand[i][0] = shuffledDeck[i][0];
+    		hand[i][1] = shuffledDeck[i][1];
+    		cardsDrawn++;
+    	}
     }
     
     /**
@@ -86,6 +90,8 @@ public class Poker {
         }
     	System.out.println("");
     }
+    
+    
     
     public void sortHand() {
     	for(int i = 0; i < hand.length; i++) {
