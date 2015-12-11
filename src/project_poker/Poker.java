@@ -5,6 +5,8 @@ public class Poker {
 	private double pot, payout;
 	private int round, matchCard, matchSuit, straight, royalFlush;
 	private int[][] hand = new int[5][2];
+	private int[][] deck = new int[52][2];
+	private int[][] shuffledDeck = new int[52][2];
 	private int[] rFlush = {10, 11, 12, 13, 1};
 	private String suit[] = {"", "Spades", "Clubs", "Diamonds", "Hearts"};
 	private String value[] = {"", "Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"};
@@ -17,6 +19,29 @@ public class Poker {
 		matchCard = 0;
 		matchSuit = 0;
 		payout = 0;
+		
+		// Creating the deck
+		for(int i = 1; i <= 4; i++) {
+			for(int j = 1; j <= 13; j++) {
+				deck[(i*j)-1][0] = i;
+				deck[(i*j)-1][1] = j;
+			}
+		}
+	}
+	
+	public void shuffleDeck() {
+		int currentSize = 52;
+
+		for(int i = 0; i < 52; i++) {
+			int pos = (int) (Math.random()*currentSize);
+			shuffledDeck[i][0] = deck[pos][0];
+			shuffledDeck[i][1] = deck[pos][1];
+			deck[pos][0] = deck[currentSize - 1][0];
+			deck[pos][1] = deck[currentSize - 1][1];
+			currentSize--;
+			System.out.println(deck[i][0] + " " + deck[i][1]);
+			System.out.println(shuffledDeck[i][1]);
+		}
 	}
 	
 	public void randomCard() {
