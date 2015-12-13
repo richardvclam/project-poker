@@ -32,12 +32,19 @@ public class MainPoker {
 					} while(!in.hasNextDouble());
 				}
 				cash = in.nextDouble();
+<<<<<<< HEAD
 				poker.displayDeposit();
+=======
+>>>>>>> origin/master
 				if(cash < 1 || cash > deposit) {
 					do {
 						System.out.println("Error: Please bet more than or equal to $1.00.");
 						System.out.print("Enter an amount to bet: $");
+<<<<<<< HEAD
 						cash = in.nextDouble();
+=======
+						in.nextDouble();
+>>>>>>> origin/master
 					} while(cash < 1 || cash > deposit);
 				}
 				poker.bet(cash);
@@ -48,6 +55,7 @@ public class MainPoker {
                 
                 while (in.hasNextInt()) {
                     int replaceCard = in.nextInt();
+<<<<<<< HEAD
                     	if (replaceCard == 0) 
                     		break;
                     	else if (replaceCard >= 1 && replaceCard <= 5) 
@@ -59,11 +67,31 @@ public class MainPoker {
                     			replaceCard = in.nextInt();
                     		}
                     	}
+=======
+                    if (replaceCard == 0) 
+                        break;
+                    else if (replaceCard >= 1 && replaceCard <= 5) 
+                        poker.replace(replaceCard - 1);
+                    else {
+                        while (replaceCard < 0 || replaceCard > 5) {
+                            System.out.println("Error: Invalid input please try again.");
+                            System.out.print("Which cards do you want to replace (1-5 for cards respectively, 0 to quit): ");
+                            replaceCard = in.nextInt();
+                        }
+                    }
+>>>>>>> origin/master
                     System.out.print("Which cards do you want to replace (1-5 for cards respectively, 0 to quit): ");
                 }
                 
                 poker.checkHand();
                 poker.determinePayout();
+<<<<<<< HEAD
+=======
+                // System.out.println("You got: " + poker.getHandText());
+                
+                // cash = (cash + (cash * poker.getPayout()));
+        		// System.out.printf("The payout: %.2f" , cash);
+>>>>>>> origin/master
         		
 				String playAgain;				
 				System.out.print("\nDo you want to play again? (Y or N) ");
