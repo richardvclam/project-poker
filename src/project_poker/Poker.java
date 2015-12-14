@@ -55,10 +55,7 @@ public class Poker {
 		matchCard = 0;
 		matchSuit = 0;
 		cardsDrawn = 0;
-<<<<<<< HEAD
 		payoutText = "";
-=======
->>>>>>> origin/master
 	}
 
 	/**
@@ -142,16 +139,10 @@ public class Poker {
 		for(int i = 1; i < 5; i ++) {
 			if((hand[i-1][1] + 1) == hand[i][1]) {
 				straight++;
-<<<<<<< HEAD
 			} else if(hand[0][1] == 1 && hand[1][1] == 10 && hand[2][1] == 11 && hand[3][1] == 12 && hand[4][1] == 13) {
 				straight = 4;
-=======
-			} else if(hand[0][1] == 1 && hand[4][1] == 13) {
-				straight++;
->>>>>>> origin/master
 			}
 		}
-		
 		// Checking for royal flush
 		for(int i = 0; i < 5; i ++) {
 			if(hand[i][1] == rFlush[i]) {
@@ -197,10 +188,7 @@ public class Poker {
 		
 		if(payout == 0) {
 			System.out.println("You lost $" + pot + ".");
-<<<<<<< HEAD
 			deposit -= pot;
-=======
->>>>>>> origin/master
 		} else {
 			System.out.println("You win $" + (pot+(pot*payout)) + "!");
 			deposit += (pot+(pot*payout));
@@ -210,21 +198,10 @@ public class Poker {
 	public void bet(double amount) {
 		pot = amount;
 		deposit -= amount;
-<<<<<<< HEAD
 	}
 	
 	public void deposit(double amount) {
 		deposit += amount;
-=======
-	}
-	
-	public void deposit(double amount) {
-		deposit += amount;
-	}
-	
-	public double displayDeposit(){
-		return deposit;
->>>>>>> origin/master
 	}
 	
 	public double displayDeposit(){
