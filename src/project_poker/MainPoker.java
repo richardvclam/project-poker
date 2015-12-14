@@ -64,17 +64,6 @@ public class MainPoker {
                     		}
                     		replaceCounter++;
                     	}
-                    if (replaceCard == 0) 
-                        break;
-                    else if (replaceCard >= 1 && replaceCard <= 5) 
-                        poker.replace(replaceCard - 1);
-                    else {
-                        while (replaceCard < 0 || replaceCard > 5) {
-                            System.out.println("Error: Invalid input please try again.");
-                            System.out.print("Which cards do you want to replace (1-5 for cards respectively, 0 to quit): ");
-                            replaceCard = in.nextInt();
-                        }
-                    }
                     System.out.print("Which cards do you want to replace (1-5 for cards respectively, 0 to quit): ");
                 }
                 
