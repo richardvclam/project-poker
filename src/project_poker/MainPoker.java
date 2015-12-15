@@ -10,6 +10,8 @@ public class MainPoker {
 		double cash, deposit = 0;
 		boolean run = true;
 		int replaceCounter = 0;
+		
+		// Deposit money
 		System.out.print("Enter the amount of money that you want to deposit: $");
 		if (in.hasNextDouble()) {
 			deposit = in.nextDouble();
@@ -22,6 +24,8 @@ public class MainPoker {
 			}
 			poker.deposit(deposit);
 		}
+		
+		// Game starts. Bet an amount
 		while (run == true) {
 			do {
 				System.out.print("Enter an amount to bet: $");
@@ -45,13 +49,17 @@ public class MainPoker {
 				poker.shuffleDeck();
 				poker.getHand();
                 poker.displayHand();
+                
+                // Replacing cards in hand
                 System.out.print("Which cards do you want to replace (1-5 for cards respectively, 0 to quit): ");
                 
                 while (in.hasNextInt()) {
                     int replaceCard = in.nextInt();
 
-                    	if (replaceCard == 0 || replaceCounter == 5) 
+                    	if (replaceCard == 0 || replaceCounter == 5) {
+                    		replaceCounter = 0;
                     		break;
+                    	}
                     	else if (replaceCard >= 1 && replaceCard <= 5) {                    	
                     		poker.replace(replaceCard - 1);
                     		replaceCounter++;

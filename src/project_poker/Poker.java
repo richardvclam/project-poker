@@ -1,9 +1,8 @@
 package project_poker;
 
 public class Poker {
-
 	private double pot, payout, deposit;
-	private int round, matchCard, matchSuit, straight, royalFlush, cardsDrawn;
+	private int matchCard, matchSuit, straight, royalFlush, cardsDrawn;
 	private int[][] hand = new int[5][2];
 	private int[][] deck = new int[52][2];
 	private int[][] shuffledDeck = new int[52][2];
@@ -11,11 +10,10 @@ public class Poker {
 	private String suit[] = {"", "Spades", "Clubs", "Diamonds", "Hearts"};
 	private String value[] = {"", "Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"};
 	private String payoutText;
-	private boolean twoPair = false;
+	private boolean twoPair = false, fullHouse = false;
 	
 	public Poker() {
 		pot = 0;
-		round = 1;
 		matchCard = 0;
 		matchSuit = 0;
 		payout = 0;
@@ -33,6 +31,9 @@ public class Poker {
 		}
 	}
 	
+	/**
+	 * This method shuffles the deck.
+	 */
 	public void shuffleDeck() {
 		int currentSize = deck.length;
 
@@ -46,16 +47,28 @@ public class Poker {
 		}
 	}
 	
+	/**
+	 * This method is to be used at the end of a round to reset some variables back to 0.
+	 */
 	public void resetRound() {
 		pot = 0;
 		straight = 0;
 		royalFlush = 0;
 		payout = 0;
-		round++;
 		matchCard = 0;
 		matchSuit = 0;
 		cardsDrawn = 0;
 		payoutText = "";
+		
+		// Recreate the deck
+		int count = 0;
+		for(int i = 1; i <= 4; i++) {
+			for(int j = 1; j <= 13; j++) {
+				deck[count][0] = i;
+				deck[count][1] = j;
+				count++;
+			}
+		}
 	}
 
 	/**
@@ -70,6 +83,9 @@ public class Poker {
     	displayHand();
     }
     
+    /**
+     * This method "draws" five cards from the shuffledDeck. This method is to be used after shuffleDeck().
+     */
     public void getHand() {
     	for (int i = 0; i < 5; i++) {
     		hand[i][0] = shuffledDeck[i][0];
@@ -79,7 +95,7 @@ public class Poker {
     }
     
     /**
-     * This method will use a for loop that displays the user's hand..
+     * This method will use a for loop that displays the user's hand.
      */
     public void displayHand() {
     	sortHand();
@@ -93,6 +109,9 @@ public class Poker {
     	System.out.println("");
     }
     
+    /**
+     * This method sorts the hand's card values from smallest to largest.
+     */
     public void sortHand() {
     	for(int i = 0; i < hand.length; i++) {
     		for(int j = i + 1; j < hand.length; j++) {
@@ -111,12 +130,22 @@ public class Poker {
     	}
     }
     
+    /**
+     * This method checks the hand for flush, pairs, straights, or a royal flush.
+     */
 	public void checkHand() {
 		// Checking for flush
 		for(int i = 1; i < 5; i++) {
 			if(hand[0][0] == hand[i][0]) {
 				matchSuit++;
 			}
+		}
+		
+		// Checking for full house
+		if(hand[0][1] == hand[1][1] && hand[0][1] == hand[2][1] && hand[3][1] == hand[4][1]) {
+			fullHouse = true;
+		} else if(hand[0][1] == hand[1][1] && hand[2][1] == hand[3][1] && hand[2][1] == hand[4][1]) {
+			fullHouse = true;
 		}
 		
 		// Checking for pairs
@@ -137,10 +166,10 @@ public class Poker {
 		
 		// Checking for straight
 		for(int i = 1; i < 5; i ++) {
-			if((hand[i-1][1] + 1) == hand[i][1]) {
-				straight++;
-			} else if(hand[0][1] == 1 && hand[1][1] == 10 && hand[2][1] == 11 && hand[3][1] == 12 && hand[4][1] == 13) {
+			if(hand[0][1] == 1 && hand[1][1] == 10 && hand[2][1] == 11 && hand[3][1] == 12 && hand[4][1] == 13) {
 				straight = 4;
+			} else if((hand[i-1][1] + 1) == hand[i][1]) {
+				straight++;
 			}
 		}
 		// Checking for royal flush
@@ -151,8 +180,11 @@ public class Poker {
 		}
 	}
 	
+	/**
+	 * This method determines the payout based on variables collected from checkHand().
+	 */
 	public void determinePayout() {
-		if(twoPair && matchCard == 2) { // full house
+		if(fullHouse) { // full house
 			payoutText = "a Full House";
 			payout = 0.06;
 		} else if(twoPair) {        // two pair
@@ -188,28 +220,34 @@ public class Poker {
 		
 		if(payout == 0) {
 			System.out.println("You lost $" + pot + ".");
-			deposit -= pot;
 		} else {
 			System.out.println("You win $" + (pot+(pot*payout)) + "!");
 			deposit += (pot+(pot*payout));
 		}
 	}
-		
+	
+	/**
+	 * This method sets the pot to the amount and subtracts the amount from the deposit total.
+	 * @param amount is a user input variable that determines how much they want to bet.
+	 */
 	public void bet(double amount) {
 		pot = amount;
 		deposit -= amount;
 	}
 	
+	/** 
+	 * This method adds the amount to the variable deposit
+	 * @param amount is a user input variable that determines how much the user has to deposit.
+	 */
 	public void deposit(double amount) {
 		deposit += amount;
 	}
 	
+	/**
+	 * This method returns the deposit variable.
+	 * @return the deposit variable.
+	 */
 	public double displayDeposit(){
 		return deposit;
-	}
-	
-	
-	public int round() {
-		return round;
 	}
 }
